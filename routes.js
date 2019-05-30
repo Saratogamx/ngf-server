@@ -16,8 +16,8 @@ module.exports = function(app) {
   app.get('/api/events/:eventId', events.getEvent);
   app.post('/api/events', events.saveEvent);
   app.get('/api/sessions/search', events.searchSessions);
-  app.delete('/api/events/:eventId/sessions/:sessionId/voters/:voterId', events.deleteVoter);
-  app.post('/api/events/:eventId/sessions/:sessionId/voters/:voterId', events.addVoter);
+
+  app.get('/api/customers/:id/events', events.getEventsByCustomer);
   
   app.post('/api/logout', function(req, res) {
     req.logout();

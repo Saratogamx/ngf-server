@@ -13,6 +13,12 @@ exports.getEvent = function(req, res) {
   res.send(event);
 }
 
+exports.getEventsByCustomer = function(req, res) {
+  var customerId = +req.params.id;
+  var customerEvents = events.filter(event => event.customerId === customerId);
+  res.send(customerEvents);
+}
+
 exports.searchSessions = function(req, res) {
 	var term = req.query.search.toLowerCase();
   var results = [];
@@ -25,30 +31,6 @@ exports.searchSessions = function(req, res) {
     results = results.concat(matchingSessions);
   })
   res.send(results);
-}
-
-exports.deleteVoter = function(req, res) {
-  var voterId = req.params.voterId,
-      sessionId = parseInt(req.params.sessionId),
-      eventId = parseInt(req.params.eventId);
-
-  var session = events.find(event => event.id === eventId)
-    .sessions.find(session => session.id === sessionId)
-    
-  session.voters = session.voters.filter(voter => voter !== voterId);
-  res.send(session);
-}
-
-exports.addVoter = function(req, res) {
-  var voterId = req.params.voterId,
-      sessionId = parseInt(req.params.sessionId),
-      eventId = parseInt(req.params.eventId);
-
-  var event = events.find(event => event.id === eventId)
-  var session = event.sessions.find(session => session.id === sessionId)
-    
-  session.voters.push(voterId);
-  res.send(session);
 }
 
 exports.saveEvent = function(req, res) {
